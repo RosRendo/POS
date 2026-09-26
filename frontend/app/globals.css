@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+:root {
+  --bg-main: #f3f4f6;
+  --bg-card: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
+  --primary: #111827;
+  --primary-hover: #000000;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Clean Box UI Elements (No Borders, Crisp Edges) */
+.input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 0.875rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s ease-in-out;
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px #111827;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.125rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background-color: #111827;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #000000;
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.btn-success {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #047857;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #6b7280;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #111827;
+}
+
+/* Clean Thermal Receipt Printing */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible;
+  }
+
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    margin: 0;
+    padding: 8px;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    line-height: 1.3;
+    box-shadow: none !important;
+  }
+
+  @page {
+    size: 80mm auto;
+    margin: 0;
+  }
+}
