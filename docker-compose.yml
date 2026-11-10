@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pos_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pos_system
+    ports:
+      - "5433:5432"
+    volumes:
+      - pos_postgres_data:/var/lib/postgresql/data
+    networks:
+      - pos_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: pos_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - pos_redis_data:/data
+    networks:
+      - pos_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pos_backend
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/pos_system
+      REDIS_URL: redis://redis:6379
+      PORT: 3001
+      JWT_SECRET: dev_pos_secret_key_2026
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - pos_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pos_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api
+    depends_on:
+      - backend
+    networks:
+      - pos_network
+
+volumes:
+  pos_postgres_data:
+    driver: local
+  pos_redis_data:
+    driver: local
+
+networks:
+  pos_network:
+    driver: bridge
